@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class EvenOdds {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long n = sc.nextLong();
+        long k = sc.nextLong();
+
+        long oddCount = (n + 1) / 2; // total odd numbers
+
+        if (k <= oddCount) {
+            // k-th odd number
+            System.out.println(2 * k - 1);
+        } else {
+            // (k - oddCount)-th even number
+            long posInEven = k - oddCount;
+            System.out.println(2 * posInEven);
+        }
+    }
+}
