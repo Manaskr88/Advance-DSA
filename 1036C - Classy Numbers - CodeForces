@@ -1,0 +1,51 @@
+class Solution {
+
+    long[][][] dp;
+    String s;
+
+    long solve(long n) {
+        if (n <= 0) return 0;
+
+        s = String.valueOf(n);
+        int len = s.length();
+
+        // dp[idx][restrict][nonZeroCount]
+        dp = new long[len][2][4];
+
+        for (int i = 0; i < len; i++)
+            for (int j = 0; j < 2; j++)
+                for (int k = 0; k < 4; k++)
+                    dp[i][j][k] = -1;
+
+        return dfs(0, 1, 0);
+    }
+
+    long dfs(int idx, int restrict, int cnt) {
+
+        if (cnt > 3) return 0;
+
+        if (idx == s.length()) {
+            return 1;
+        }
+
+        if (dp[idx][restrict][cnt] != -1)
+            return dp[idx][restrict][cnt];
+
+        int ub = (restrict == 1) ? s.charAt(idx) - '0' : 9;
+        long res = 0;
+
+        for (int digit = 0; digit <= ub; digit++) {
+            int newCnt = cnt + (digit != 0 ? 1 : 0);
+            int newRestrict = (restrict == 1 && digit == ub) ? 1 : 0;
+
+            res += dfs(idx + 1, newRestrict, newCnt);
+        }
+
+        dp[idx][restrict][cnt] = res;
+        return res;
+    }
+
+    public long classyInRange(long L, long R) {
+        return solve(R) - solve(L - 1);
+    }
+}
