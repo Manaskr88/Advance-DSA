@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Graph1 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("number of vertices : ");
+        int n = sc.nextInt();   
+
+        int[][] arr = new int[n][n];
+
+        System.out.println("Enter adjacency matrix: ");
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = sc.nextInt();
+            }
+        }
+
+        
+        System.out.println("Adjacency Matrix of the Graph:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        sc.close();
+    }
+}
