@@ -1,0 +1,80 @@
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class MinKnightMove {
+
+    static int[] dirRow = {2, 2, -2, -2, 1, 1, -1, -1};
+    static int[] dirCol = {1, -1, 1, -1, 2, -2, 2, -2};
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int t = Integer.parseInt(br.readLine().trim());
+
+        while (t-- > 0) {
+
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String s1 = st.nextToken();
+            String s2 = st.nextToken();
+
+            int s1x = s1.charAt(0) - 'a';
+            int s1y = s1.charAt(1) - '1';
+            int s2x = s2.charAt(0) - 'a';
+            int s2y = s2.charAt(1) - '1';
+
+            System.out.println(bfs(s1x, s1y, s2x, s2y));
+        }
+    }
+
+   static int bfs(int sx, int sy, int dx, int dy) {
+
+    if (sx == dx && sy == dy) {
+        return 0;
+    }
+
+    boolean[][] visited = new boolean[8][8];
+    int[][] level = new int[8][8];
+
+    Queue<int[]> q = new LinkedList<>();
+    q.add(new int[]{sx, sy});  // sx = source x and source y 
+    visited[sx][sy] = true;
+
+    while (!q.isEmpty()) {
+
+        int[] curr = q.poll();
+        int x = curr[0];
+        int y = curr[1];
+
+        for (int i = 0; i < 8; i++) {
+
+            int nx = x + dirRow[i];
+            int ny = y + dirCol[i];
+
+            // Correct boundary check
+            if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) {
+
+                if (!visited[nx][ny]) {
+                    
+                    visited[nx][ny] = true;
+                    level[nx][ny] = level[x][y] + 1;
+
+                    // If we reached destination, return answer
+                    if (nx == dx && ny == dy) {
+                        return level[nx][ny];
+                    }
+
+                    q.add(new int[]{nx, ny});
+                }
+            }
+        }
+    }
+    return -1; 
+}
+
+
+}
